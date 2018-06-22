@@ -17,14 +17,16 @@ activePlayer = 0;
 
 var diceDom = document.querySelector('.dice');
 var btnRollDom = document.querySelector('.btn-roll');
+var btnHoldDom = document.querySelector('.btn-hold');
 diceDom.style.display = 'none';
 document.getElementById('score-0').textContent = '0';
 document.getElementById('score-1').textContent = '0';
 document.getElementById('current-0').textContent = '0';
 document.getElementById('current-1').textContent = '0';
 
-
-
+/**
+ * Roll the  Dice
+ */
 btnRollDom.addEventListener('click', function () {
 
     //1. Random Number
@@ -39,16 +41,32 @@ btnRollDom.addEventListener('click', function () {
         document.querySelector('#current-' + activePlayer).textContent = roundScore;
     } else {
         //Next Player
-        activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
-        roundScore = 0;
-        document.getElementById('current-0').textContent = '0';
-        document.getElementById('current-1').textContent = '0';
-
-        //document.querySelector('.player-0-panel').classList.remove('active');
-        //document.querySelector('.player-1-panel').classList.add('active');
-        document.querySelector('.player-0-panel').classList.toggle('active');
-        document.querySelector('.player-1-panel').classList.toggle('active');
-
-        diceDom.style.display = 'none';
+        switchPlayer();
     }
 });
+
+/**
+ * Hold Function
+ */
+btnHoldDom.addEventListener('click', function () {
+    scores[activePlayer] += roundScore;
+    document.querySelector('#score-'+activePlayer).textContent = scores[activePlayer];
+    switchPlayer();
+});
+
+/**
+ * Switch the active player
+ */
+function switchPlayer() {
+    activePlayer === 0 ? activePlayer = 1 : activePlayer = 0;
+    roundScore = 0;
+    document.getElementById('current-0').textContent = '0';
+    document.getElementById('current-1').textContent = '0';
+
+    //document.querySelector('.player-0-panel').classList.remove('active');
+    //document.querySelector('.player-1-panel').classList.add('active');
+    document.querySelector('.player-0-panel').classList.toggle('active');
+    document.querySelector('.player-1-panel').classList.toggle('active');
+
+    diceDom.style.display = 'none';
+};
